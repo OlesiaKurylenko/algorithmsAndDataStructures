@@ -1,6 +1,6 @@
 const generateRandomArray = (count) => {
     let arr = [];
-    let min = -100000;
+    let min = 1;
     let max = 100000;
     while ((count--) > 0) {
         arr.push(Math.floor(Math.random() * (max - min + 1)) + min);

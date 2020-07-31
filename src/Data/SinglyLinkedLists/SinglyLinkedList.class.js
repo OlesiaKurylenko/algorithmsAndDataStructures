@@ -20,6 +20,7 @@ module.exports = class SinglyLinkedList {
     }
     pop() {
         if (!this.head) return undefined;
+
         var current = this.head;
         var newTail = current;
         while (current.next) {
@@ -35,6 +36,7 @@ module.exports = class SinglyLinkedList {
         }
         return current;
     }
+
     shift() {
         if (!this.head) return undefined;
         var currentHead = this.head;
@@ -119,5 +121,20 @@ module.exports = class SinglyLinkedList {
             current = current.next
         }
         console.log(arr);
+    }
+    getIndexOf(value) {
+        let current = this.head; // current is a head of our list
+        let index = 0; // index which will be returned
+
+        while (current) {
+            if (current.value === value) {
+                return index;
+            }
+
+            current = current.next;
+            index++;
+        }
+
+        return -1;
     }
 }

@@ -28,4 +28,19 @@ module.exports = class Stack {
         this.size--;
         return temp.value;
     }
+    getIndexOf(value) {
+        let current = this.head; // current is a head of our list
+        let index = 0; // index which will be returned
+
+        while (current) {
+            if (current.value === value) {
+                return index;
+            }
+
+            current = current.next;
+            index++;
+        }
+
+        return -1;
+    }
 }
