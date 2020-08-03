@@ -10,4 +10,16 @@ const binarySearch = (arr, elem) => {
     return arr[middle] === elem ? middle : -1;
 }
 
-module.exports = binarySearch;
+const binsearch = (array, val, min, max) => {
+    if (!min && !max) {
+        min = 0; max = array.length - 1;
+    }
+    if (max < min) return -1;
+    let midpoint = (min + max) / 2;
+    if (array[midpoint] > val) return binsearch(val, array, min, midpoint - 1);
+    if (array[midpoint] < val) return binsearch(val, array, midpoint + 1, max);
+    if (val == array[midpoint]) return 0;
+    return -1;
+}
+
+module.exports = { binarySearch, binsearch };

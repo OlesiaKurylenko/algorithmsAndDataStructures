@@ -6,12 +6,16 @@ let mergeSort = require('./Algorithms/MergeSort/mergeSort.function');
 let quickSort = require('./Algorithms/QuickSort/quickSort.function');
 let selectionSort = require('./Algorithms/SelectionSort/selectionSort.function');
 
-let binarySearch = require('./Algorithms/Searching/binarySearch.function');
+let { binarySearch, binsearch } = require('./Algorithms/Searching/binarySearch.function');
 let linearSearch = require('./Algorithms/Searching/linearSearch.function');
 
 
 const generateRandomArray = require('./Base/generateRandomArray.function');
-const { calculateInsertPerfomance, calculatePerfomance, calculateFindPerfomance, calculateSortPerfomance } = require('./Base/calculatePerfomance');
+const { calculateInsertPerfomance,
+    calculateInsertObjectPerfomance,
+    calculateSearchPerfomance,
+    calculateFindPerfomance,
+    calculateSortPerfomance } = require('./Base/calculatePerfomance');
 
 function main() {
 
@@ -26,8 +30,8 @@ function main() {
         randomBigCopy = copyArray(randomBig);
     }
 
-    console.log(`###\tCOMPARE Singly Linked List and Array\t###`);
-    console.log('\n-- push --\n')
+    console.log(`### COMPARE Singly Linked List and Array ###`);
+    console.log('\n\t-- push --\n')
     let stackSmall = new SinglyLinkedList();
     copy();
     let result = calculateInsertPerfomance(stackSmall.push.bind(stackSmall), randomSmallCopy)
@@ -39,9 +43,20 @@ function main() {
     let arrayBig = new Array();
     let resultBigArray = calculateInsertPerfomance(arrayBig.push.bind(arrayBig), randomBigCopy)
     console.log(`Array:\t\t\tpush 1000 items :\t${resultArray},\tpush 1000000 items :\t${resultBigArray}`);
-    console.log(`\ndifference: 1000 items: SinglyLinkedList > Array on ${result - resultArray} or ${Math.round(result / resultArray * 100) / 100} times,
-    \t1 000 000 items: SinglyLinkedList > Array on ${result2 - resultBigArray} or ${Math.round(result2 / resultBigArray * 100) / 100} times\n`)
-    console.log('\n-- indexOf --\n')
+
+    console.log('\n\t-- unshift --\n')
+    let stackSmallO = new SinglyLinkedList();
+    copy();
+    let resultO = calculateInsertPerfomance(stackSmallO.unshift.bind(stackSmallO), randomSmallCopy)
+    let stackBigO = new SinglyLinkedList();
+    let result2O = calculateInsertPerfomance(stackBigO.unshift.bind(stackBigO), randomBigCopy)
+    console.log(`SinglyLinkedList:\tpush 1000 items :\t${resultO},\tpush 1000000 items :\t${result2O}`);
+    let arraySmallO = new Array();
+    let resultArrayO = calculateInsertPerfomance(arraySmallO.unshift.bind(arraySmallO), randomSmallCopy)
+    let arrayBigO = new Array();
+    let resultBigArrayO = calculateInsertPerfomance(arrayBigO.unshift.bind(arrayBigO), randomBigCopy)
+    console.log(`Array:\t\t\tpush 1000 items :\t${resultArrayO},\tpush 1000000 items :\t${resultBigArrayO}`);
+    console.log('\n\t-- indexOf --\n')
 
     let resultFindStackSmall = calculateFindPerfomance(stackSmall.getIndexOf.bind(stackSmall), randomSmallCopy[randomSmallCopy.length - 2])
     let resultFindStackBig = calculateFindPerfomance(stackBig.getIndexOf.bind(stackBig), randomBigCopy[randomBigCopy.length - 2])
@@ -53,10 +68,7 @@ function main() {
 
     console.log(`Array:\t\t\tfind last Item for 1000 items :\t${resultFindArraySmall},\t for 1000000 items :\t${resultFindArrayBig}`);
 
-    console.log(`\ndifference : 1000 items: SinglyLinkedList > Array on ${result - resultArray} or ${Math.round(result / resultArray * 100) / 100} times,
-    \t1 000 000 items: SinglyLinkedList > Array on ${result2 - resultBigArray} or ${Math.round(result2 / resultBigArray * 100) / 100} times\n`);
-
-    console.log(`\n###\tSort Algotithms\t###\n`);
+    console.log(`\n### Sort Algotithms ###\n`);
     let resultbubbleSortS = '';
     let resultbubbleSortL = '';
     /* copy();
@@ -79,15 +91,17 @@ function main() {
     resultbubbleSortL = calculateSortPerfomance(selectionSort, randomBigCopy)
     console.log(`selectionSort : 1000 items : ${resultbubbleSortS}\t1000000 items: ${resultbubbleSortL}\n`);
 */
-    console.log(`\n###\tCompare Binary Search and Linear Search \t###\n`);
+    console.log(`\n### Compare Binary Search and Linear Search ###\n`);
 
-    resultbubbleSortS = calculateFindPerfomance(binarySearch, randomSmallCopy[randomSmallCopy.length - 2])
-    resultbubbleSortL = calculateFindPerfomance(binarySearch, randomBigCopy[randomBigCopy.length - 2])
-    console.log(`binarySearch : 1000 items : ${resultbubbleSortS}\t1000000 items: ${resultbubbleSortL}`);
+    let resultbubbleSortS1 = calculateSearchPerfomance(binarySearch, randomSmallCopy, randomSmallCopy[randomSmallCopy.length - 1])
+    let resultbubbleSortL2 = calculateSearchPerfomance(binarySearch, randomBigCopy, randomBigCopy[randomBigCopy.length - 1])
+    console.log(`binarySearch : 1000 items : ${resultbubbleSortS1} \t1000000 items: ${resultbubbleSortL2}`);
 
-    resultbubbleSortS = calculateFindPerfomance(linearSearch, randomSmallCopy[randomSmallCopy.length - 2])
-    resultbubbleSortL = calculateFindPerfomance(linearSearch, randomBigCopy[randomBigCopy.length - 2])
-    console.log(`linearSearch : 1000 items : ${resultbubbleSortS}\t1000000 items: ${resultbubbleSortL}\n`);
+    let resultbubbleSortS3 = calculateSearchPerfomance(linearSearch, randomSmallCopy, randomSmallCopy[randomSmallCopy.length - 1])
+    let resultbubbleSortL4 = calculateSearchPerfomance(linearSearch, randomBigCopy, randomBigCopy[randomBigCopy.length - 1])
+    console.log(`linearSearch : 1000 items : ${resultbubbleSortS3} \t1000000 items: ${resultbubbleSortL4}\n`);
 }
+
 let copyArray = (array) => [...array];
+
 main();
